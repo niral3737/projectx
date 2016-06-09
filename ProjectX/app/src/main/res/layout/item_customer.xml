@@ -1,25 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:orientation="vertical"
-    tools:context=".ActivityMain">
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/customer_item_letter"
+        android:layout_width="@dimen/customer_letter_width"
+        android:layout_height="@dimen/customer_letter_height"
+        android:contentDescription="@string/content_description_letter"
+        android:paddingBottom="@dimen/customer_letter_padding_bottom"
+        android:paddingEnd="@dimen/customer_letter_padding_right"
+        android:paddingLeft="@dimen/customer_letter_padding_left"
+        android:paddingRight="@dimen/customer_letter_padding_right"
+        android:paddingStart="@dimen/customer_letter_padding_left"
+        android:paddingTop="@dimen/customer_letter_padding_top" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="7">
+
+
+
         <TextView
-            android:id="@+id/item_customer_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:textSize="@dimen/customer_title_text_size"/>
-
-    </RelativeLayout>
-
-</RelativeLayout>
+            android:id="@+id/customer_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/customer_name_margin_top"
+            android:paddingLeft="@dimen/customer_name_padding_left"
+            android:textSize="@dimen/customer_title_text_size" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/customer_name_padding_left"
+            android:layout_marginBottom="@dimen/customer_balance_margin_bottom"
+            android:text="New Text"
+            android:id="@+id/customer_balance"
+            android:textSize="@dimen/customer_balance_text_size"
+            android:textIsSelectable="false" />
+    </LinearLayout>
+</LinearLayout>

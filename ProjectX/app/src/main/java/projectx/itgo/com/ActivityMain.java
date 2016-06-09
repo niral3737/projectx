@@ -88,5 +88,9 @@ public class ActivityMain extends AppCompatActivity {
                 .withSavedInstance(savedInstanceState)
                 .withShowDrawerOnFirstLaunch(true)
                 .build();
+
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.main_frame_layout, new FragmentHome()).commit();
     }
 }

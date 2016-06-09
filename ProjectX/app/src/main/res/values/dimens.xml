@@ -3,5 +3,20 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fragment_top_margin">10dp</dimen>
-    <dimen name="customer_title_text_size">16sp</dimen>
+    <dimen name="customer_title_text_size">18sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="customer_name_padding_right">0dp</dimen>
+    <dimen name="customer_name_padding_left">10dp</dimen>
+    <dimen name="customer_letter_padding_left">5dp</dimen>
+    <dimen name="customer_letter_padding_right">5dp</dimen>
+    <dimen name="customer_letter_padding_top">5dp</dimen>
+    <dimen name="customer_letter_padding_bottom">5dp</dimen>
+    <dimen name="customer_letter_width">60dp</dimen>
+    <dimen name="customer_letter_height">60dp</dimen>
+    <dimen name="customer_item_lower_border">3dp</dimen>
+    <dimen name="customer_fab_add_margin_right">25dp</dimen>
+    <dimen name="customer_fab_add_margin_bottom">20dp</dimen>
+    <dimen name="customer_balance_margin_bottom">2dp</dimen>
+    <dimen name="customer_name_margin_top">2dp</dimen>
+    <dimen name="customer_balance_text_size">15sp</dimen>
 </resources>

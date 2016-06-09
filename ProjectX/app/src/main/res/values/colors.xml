@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="fragment_color">#FFFFFF</color>
+    <color name="customer_item_lower_border_color">#000000</color>
+    <color name="fab_color">#2E7D32</color>
+    <color name="balance_positive">#00cc00</color>
+    <color name="balance_negative">#cc0000</color>
 </resources>
