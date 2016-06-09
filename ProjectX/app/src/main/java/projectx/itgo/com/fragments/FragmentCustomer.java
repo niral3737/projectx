@@ -10,6 +10,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +27,7 @@ import projectx.itgo.com.APIServices.CustomerService;
 import projectx.itgo.com.R;
 import projectx.itgo.com.adapters.CustomerAdapter;
 import projectx.itgo.com.models.Customer;
+import projectx.itgo.com.utilities.CustomRecyclerClickListener;
 import projectx.itgo.com.utilities.DividerItemDecoration;
 import projectx.itgo.com.utilities.ResourceURI;
 import retrofit2.Call;
@@ -95,17 +97,17 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
             @Override
             public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
                 int statusCode = response.code();
-                if (statusCode == 200) {
+                if(statusCode==200){
                     customers = response.body();
-                    if (!(customers.size() > 0)) {
-                        customersRecyclerView.setVisibility(View.GONE);
-                        customerEmptyRelativeLayout.setVisibility(View.VISIBLE);
-                    } else {
-                        customersRecyclerView.setVisibility(View.VISIBLE);
-                        customerEmptyRelativeLayout.setVisibility(View.GONE);
-                        customerAdapter = new CustomerAdapter(customers, getActivity());
-                        customersRecyclerView.setAdapter(customerAdapter);
-                    }
+                    if(!(customers.size() > 0)){
+                    customersRecyclerView.setVisibility(View.GONE);
+                    customerEmptyRelativeLayout.setVisibility(View.VISIBLE);
+                }else {
+                    customersRecyclerView.setVisibility(View.VISIBLE);
+                    customerEmptyRelativeLayout.setVisibility(View.GONE);
+                    customerAdapter = new CustomerAdapter(customers, getActivity());
+                    customersRecyclerView.setAdapter(customerAdapter);
+                }
                 }
                 progressDialog.dismiss();
             }
@@ -116,6 +118,13 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
 
             }
         });
+
+        customersRecyclerView.addOnItemTouchListener(new CustomRecyclerClickListener(getActivity(), new CustomRecyclerClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+            }
+        }));
     }
 
     @Override
