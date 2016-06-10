@@ -12,4 +12,5 @@
     <string name="please_wait">please wait</string>
     <string name="loading_customers">loading cutomers</string>
     <string name="click_to_add_a_new_customer">Click \'+\' to add a new customer</string>
+    <string name="new_customer">New Customer</string>
 </resources>

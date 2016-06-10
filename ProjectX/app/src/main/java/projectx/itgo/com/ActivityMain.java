@@ -29,7 +29,7 @@ public class ActivityMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.include);
+        toolbar = (Toolbar) findViewById(R.id.customers_toolbar);
         setSupportActionBar(toolbar);
 
         final IProfile profile = new ProfileDrawerItem().withName("Kalpesh Patel").withEmail("mikepenz@gmail.com").withIcon(R.drawable.profile);
