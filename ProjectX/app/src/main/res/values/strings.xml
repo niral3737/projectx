@@ -13,4 +13,12 @@
     <string name="loading_customers">loading cutomers</string>
     <string name="click_to_add_a_new_customer">Click \'+\' to add a new customer</string>
     <string name="new_customer">New Customer</string>
+    <string name="customer_first_name">First Name</string>
+    <string name="customer_email">Email</string>
+    <string name="customer_last_name">Last Name</string>
+    <string name="customer_address">Address</string>
+    <string name="customer_balance">Balance</string>
+    <string name="customer_company_name">Company Name</string>
+    <string name="customer_phone_number">Phone Number</string>
+    <string name="enter_valid_email">Enter valid email</string>
 </resources>

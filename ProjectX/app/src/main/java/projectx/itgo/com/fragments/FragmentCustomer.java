@@ -97,7 +97,6 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
 
 //        Setting up progress dialog and making and Async call to get all  regular customers
 
-
         progressDialog.setTitle("Please Wait");
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
