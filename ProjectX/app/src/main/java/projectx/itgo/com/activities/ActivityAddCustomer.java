@@ -49,7 +49,7 @@ public class ActivityAddCustomer extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.new_customer);
         customerScrollView = (ScrollView) findViewById(R.id.my_scrollview);
-        progressWheel = (ProgressWheel) findViewById(R.id.progress_wheel);
+        progressWheel = (ProgressWheel) findViewById(R.id.add_customer_activity_progress_wheel);
         assert progressWheel != null;
         progressWheel.setVisibility(View.GONE);
         customerScrollView.setVisibility(View.VISIBLE);

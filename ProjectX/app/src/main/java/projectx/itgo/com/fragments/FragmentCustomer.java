@@ -1,7 +1,6 @@
 package projectx.itgo.com.fragments;
 
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,10 +48,10 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
     CustomerAdapter customerAdapter;
     FloatingActionButton floatingActionButton;
     CustomerService customerService;
+    ProgressWheel customerFragmentProgressWheel;
     Call<List<Customer>> callCustomers;
     List<String> customersList = new ArrayList<>();
     List<Customer> customers;
-    private ProgressDialog progressDialog;
 
     public FragmentCustomer() {
     }
@@ -72,36 +73,15 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
 //        getting all the UI elements
 
+        customerFragmentProgressWheel = (ProgressWheel) view.findViewById(R.id.customer_fragment_progress_wheel);
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab_add_customer);
         customersRecyclerView = (RecyclerView) view.findViewById(R.id.customers_recycler_view);
         customerEmptyRelativeLayout = (RelativeLayout) view.findViewById(R.id.customer_empty_relative_layout);
         customerSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.customer_swipe_refresh_layout);
-        progressDialog = new ProgressDialog(getActivity());
         customerService = RetrofitUtil.getCustomerService();
         callCustomers = customerService.getRegularCustomers();
-
-
-//        fab action
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ActivityAddCustomer.class);
-                startActivity(intent);
-            }
-        });
-
-
-//        Setting up progress dialog and making and Async call to get all  regular customers
-
-        progressDialog.setTitle("Please Wait");
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        getCustomerList();
 
 
 //        recycler view actions
@@ -148,8 +128,8 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
                         customersRecyclerView.setAdapter(customerAdapter);
                     }
                 }
-                if (progressDialog.isShowing()) {
-                    progressDialog.dismiss();
+                if (customerFragmentProgressWheel.getVisibility() == View.VISIBLE) {
+                    customerFragmentProgressWheel.setVisibility(View.GONE);
                 }
                 if (customerSwipeRefreshLayout.isRefreshing()) {
                     customerSwipeRefreshLayout.setRefreshing(false);
@@ -159,8 +139,8 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
             @Override
             public void onFailure(Call<List<Customer>> call, Throwable t) {
                 t.printStackTrace();
-                if (progressDialog.isShowing()) {
-                    progressDialog.dismiss();
+                if (customerFragmentProgressWheel.getVisibility() == View.VISIBLE) {
+                    customerFragmentProgressWheel.setVisibility(View.GONE);
                 }
                 if (customerSwipeRefreshLayout.isRefreshing()) {
                     customerSwipeRefreshLayout.setRefreshing(false);
@@ -221,5 +201,23 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
             }
         }
         return filteredCustomerList;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityAddCustomer.class);
+                startActivity(intent);
+            }
+        });
+
+
+//        Making an Async call to get all regular customers
+
+        customerFragmentProgressWheel.setVisibility(View.VISIBLE);
+        getCustomerList();
     }
 }

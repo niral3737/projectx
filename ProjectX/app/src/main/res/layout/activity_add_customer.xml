@@ -175,7 +175,7 @@
         </RelativeLayout>
     </ScrollView>
     <com.pnikosis.materialishprogress.ProgressWheel
-        android:id="@+id/progress_wheel"
+        android:id="@+id/add_customer_activity_progress_wheel"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"

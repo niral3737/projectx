@@ -42,11 +42,11 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
     @Override
     public void onBindViewHolder(CustomerViewHolder holder, final int position) {
         holder.customerTitle.setText(customersList.get(position).getFirstName());
-        if(customersList.get(position).getBalance()>0){
-            holder.balance.setTextColor(context.getResources().getColor(R.color.balance_positive));
-        }else{
-            holder.balance.setTextColor(context.getResources().getColor(R.color.balance_negative));
-        }
+//        if(customersList.get(position).getBalance()>0){
+//            holder.balance.setTextColor(context.getResources().getColor(R.color.balance_positive));
+//        }else{
+//            holder.balance.setTextColor(context.getResources().getColor(R.color.balance_negative));
+//        }
         holder.balance.setText(customersList.get(position).getBalance().toString());
         String firstLetter = String.valueOf(customersList.get(position).getFirstName().charAt(0));
 

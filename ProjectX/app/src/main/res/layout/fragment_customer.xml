@@ -25,7 +25,7 @@
         android:id="@+id/customer_empty_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textView"
@@ -50,4 +50,14 @@
         android:layout_marginRight="@dimen/customer_fab_add_margin_right"
         android:src="@drawable/ic_add_white_18dp"
         app:backgroundTint="@color/fab_color" />
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/customer_fragment_progress_wheel"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        app:matProg_barColor="#5588FF"
+        app:matProg_progressIndeterminate="true" />
 </RelativeLayout>
