@@ -33,7 +33,7 @@ public class ActivityMain extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         final IProfile profile = new ProfileDrawerItem().withName("Kalpesh Patel").withEmail("mikepenz@gmail.com").withIcon(R.drawable.profile);
-
+        assert toolbar!=null;
         toolbar.setTitle(R.string.drawer_item_home);
 
         headerResult = new AccountHeaderBuilder()

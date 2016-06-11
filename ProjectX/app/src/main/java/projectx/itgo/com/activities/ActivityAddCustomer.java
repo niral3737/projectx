@@ -17,6 +17,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
+import android.widget.Toast;
+
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import projectx.itgo.com.APIServices.CustomerService;
 import projectx.itgo.com.R;
@@ -25,16 +29,16 @@ import projectx.itgo.com.utilities.RetrofitUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ActivityAddCustomer extends AppCompatActivity {
 
     static final int PICK_CONTACT = 1;
     EditText customerEmailEditText, customerFirstNameEditText, customerPhoneNumberEditText, customerLastNameEditText, customerAddressEditText, customerCompanyNameEditText, customerBalanceEditText;
-
+    ScrollView customerScrollView;
+    ProgressWheel progressWheel;
     FloatingActionButton chooseContactFloatingActionButton;
     Button addNewCustomerButton;
-    Customer customer;
+    Customer customer = new Customer();
     private Toolbar toolbar;
 
     @Override
@@ -44,6 +48,11 @@ public class ActivityAddCustomer extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.add_customer_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.new_customer);
+        customerScrollView = (ScrollView) findViewById(R.id.my_scrollview);
+        progressWheel = (ProgressWheel) findViewById(R.id.progress_wheel);
+        assert progressWheel != null;
+        progressWheel.setVisibility(View.GONE);
+        customerScrollView.setVisibility(View.VISIBLE);
         customerEmailEditText = (EditText) findViewById(R.id.customer_email_edit_text);
         chooseContactFloatingActionButton = (FloatingActionButton) findViewById(R.id.choose_contact_fab);
         customerFirstNameEditText = (EditText) findViewById(R.id.customer_first_name_edit_text);
@@ -67,15 +76,17 @@ public class ActivityAddCustomer extends AppCompatActivity {
         addNewCustomerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                customerScrollView.setVisibility(View.GONE);
+                progressWheel.setVisibility(View.VISIBLE);
                 customer.setAddress(customerAddressEditText.getText().toString());
                 customer.setFirstName(customerFirstNameEditText.getText().toString());
                 customer.setLastName(customerLastNameEditText.getText().toString());
                 customer.setCompanyName(customerCompanyNameEditText.getText().toString());
                 customer.setEmail(customerEmailEditText.getText().toString());
                 customer.setPhoneNumber(customerPhoneNumberEditText.getText().toString());
-                if(!customerBalanceEditText.getText().toString().isEmpty()) {
+                if (!customerBalanceEditText.getText().toString().isEmpty()) {
                     customer.setBalance(Double.parseDouble(customerBalanceEditText.getText().toString()));
-                }else{
+                } else {
                     customer.setBalance((double) 0);
                 }
 
@@ -85,14 +96,18 @@ public class ActivityAddCustomer extends AppCompatActivity {
                 addCustomerCall.clone().enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        if(response.code()==200){
-
+                        if (response.code() == 200) {
+                            Toast.makeText(ActivityAddCustomer.this, "Customer added successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ActivityAddCustomer.this, "There must be some problem. Try again later.", Toast.LENGTH_SHORT).show();
                         }
+                        finish();
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-
+                        Toast.makeText(ActivityAddCustomer.this, "There must be some problem. Try again later.", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 });
 
@@ -149,6 +164,10 @@ public class ActivityAddCustomer extends AppCompatActivity {
                                     null, null);
                             phones.moveToFirst();
                             cNumber = phones.getString(phones.getColumnIndex("data1"));
+                            cNumber = cNumber.replace(" ", "");
+                            if (cNumber.length() > 10) {
+                                cNumber = cNumber.substring(cNumber.length() - 10);
+                            }
                             System.out.println("number is:" + cNumber);
                         }
                         String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
