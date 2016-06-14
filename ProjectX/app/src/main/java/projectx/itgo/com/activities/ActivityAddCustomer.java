@@ -46,6 +46,7 @@ public class ActivityAddCustomer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_customer);
+//        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         toolbar = (Toolbar) findViewById(R.id.add_customer_toolbar);
         setSupportActionBar(toolbar);
 
@@ -203,11 +204,11 @@ public class ActivityAddCustomer extends AppCompatActivity {
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches() && !email.isEmpty()) {
             customerEmailEditText.setError(getString(R.string.enter_valid_email));
-            requestFocus(customerEmailEditText);
+//            requestFocus(customerEmailEditText);
             return false;
         } else {
             customerEmailEditText.setError(null);
-            requestFocus(customerEmailEditText);
+//            requestFocus(customerEmailEditText);
         }
 
         return true;
