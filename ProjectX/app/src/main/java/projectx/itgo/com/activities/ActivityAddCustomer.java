@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -38,7 +37,9 @@ public class ActivityAddCustomer extends AppCompatActivity {
     ProgressWheel progressWheel;
     FloatingActionButton chooseContactFloatingActionButton;
     Button addNewCustomerButton;
-    Customer customer = new Customer();
+    Customer customer;
+    String flag;
+    CustomerService customerService;
     private Toolbar toolbar;
 
     @Override
@@ -47,7 +48,7 @@ public class ActivityAddCustomer extends AppCompatActivity {
         setContentView(R.layout.activity_add_customer);
         toolbar = (Toolbar) findViewById(R.id.add_customer_toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.new_customer);
+
         customerScrollView = (ScrollView) findViewById(R.id.my_scrollview);
         progressWheel = (ProgressWheel) findViewById(R.id.add_customer_activity_progress_wheel);
         assert progressWheel != null;
@@ -63,6 +64,7 @@ public class ActivityAddCustomer extends AppCompatActivity {
         customerBalanceEditText = (EditText) findViewById(R.id.customer_balance_edit_text);
         addNewCustomerButton = (Button) findViewById(R.id.add_new_customer_button);
         customerEmailEditText.addTextChangedListener(new MyTextWatcher(customerEmailEditText));
+        customerService = RetrofitUtil.getCustomerService();
 
 
         chooseContactFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -73,47 +75,127 @@ public class ActivityAddCustomer extends AppCompatActivity {
             }
         });
 
+        Intent intent = getIntent();
+
+        flag = intent.getStringExtra("flag");
+
+        if (flag.equals("insert")) {
+
+            // toolbar.setTitle(R.string.new_customer);
+            getSupportActionBar().setTitle(R.string.new_customer);
+            customer = new Customer();
+
+        } else {
+
+            // toolbar.setTitle(R.string.update_customer);
+            getSupportActionBar().setTitle(R.string.update_customer);
+
+            customer = intent.getParcelableExtra("customer");
+            customerFirstNameEditText.setText(customer.getFirstName());
+            customerLastNameEditText.setText(customer.getLastName());
+            customerEmailEditText.setText(customer.getEmail());
+            customerPhoneNumberEditText.setText(customer.getPhoneNumber());
+            customerAddressEditText.setText(customer.getAddress());
+            customerCompanyNameEditText.setText(customer.getCompanyName());
+            customerBalanceEditText.setText(customer.getBalance().toString());
+
+            addNewCustomerButton.setText(R.string.update_customer_button_text);
+
+
+        }
+
         addNewCustomerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customerScrollView.setVisibility(View.GONE);
-                progressWheel.setVisibility(View.VISIBLE);
-                customer.setAddress(customerAddressEditText.getText().toString());
-                customer.setFirstName(customerFirstNameEditText.getText().toString());
-                customer.setLastName(customerLastNameEditText.getText().toString());
-                customer.setCompanyName(customerCompanyNameEditText.getText().toString());
-                customer.setEmail(customerEmailEditText.getText().toString());
-                customer.setPhoneNumber(customerPhoneNumberEditText.getText().toString());
-                if (!customerBalanceEditText.getText().toString().isEmpty()) {
-                    customer.setBalance(Double.parseDouble(customerBalanceEditText.getText().toString()));
-                } else {
-                    customer.setBalance((double) 0);
+                if (validate()) {
+
+                    customerScrollView.setVisibility(View.GONE);
+                    progressWheel.setVisibility(View.VISIBLE);
+                    customer.setAddress(customerAddressEditText.getText().toString());
+                    customer.setFirstName(customerFirstNameEditText.getText().toString());
+                    customer.setLastName(customerLastNameEditText.getText().toString());
+                    customer.setCompanyName(customerCompanyNameEditText.getText().toString());
+                    customer.setEmail(customerEmailEditText.getText().toString());
+                    customer.setPhoneNumber(customerPhoneNumberEditText.getText().toString());
+                    if (!customerBalanceEditText.getText().toString().isEmpty()) {
+                        customer.setBalance(Double.parseDouble(customerBalanceEditText.getText().toString()));
+                    } else {
+                        customer.setBalance((double) 0);
+                    }
+
+                    if (flag.equals("insert")) {
+
+                        Call<String> addCustomerCall = customerService.addRegularCustomer(customer);
+
+                        addCustomerCall.clone().enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                if (response.code() == 200) {
+                                    Toast.makeText(ActivityAddCustomer.this, getResources().getString(R.string.customer_added_successfully), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(ActivityAddCustomer.this, getResources().getString(R.string.there_must_be_some_problem), Toast.LENGTH_SHORT).show();
+                                }
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                                Toast.makeText(ActivityAddCustomer.this, getResources().getString(R.string.there_must_be_some_problem), Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                    } else {
+                        Call<String> updateCustomerCall = customerService.updateCustomer(customer.getId().toString(), customer);
+                        updateCustomerCall.clone().enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                if (response.code() == 200) {
+                                    Toast.makeText(ActivityAddCustomer.this, getResources().getString(R.string.customer_updated_successfully), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(ActivityAddCustomer.this, getResources().getString(R.string.there_must_be_some_problem), Toast.LENGTH_SHORT).show();
+                                }
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                                Toast.makeText(ActivityAddCustomer.this, getResources().getString(R.string.there_must_be_some_problem), Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                    }
                 }
-
-                CustomerService customerService = RetrofitUtil.getCustomerService();
-                Call<String> addCustomerCall = customerService.addRegularCustomer(customer);
-
-                addCustomerCall.clone().enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.code() == 200) {
-                            Toast.makeText(ActivityAddCustomer.this, "Customer added successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(ActivityAddCustomer.this, "There must be some problem. Try again later.", Toast.LENGTH_SHORT).show();
-                        }
-                        finish();
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Toast.makeText(ActivityAddCustomer.this, "There must be some problem. Try again later.", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                });
 
 
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+    }
+
+    private boolean validate() {
+        if (customerFirstNameEditText.getText().toString().isEmpty()) {
+            customerFirstNameEditText.setError(getResources().getString(R.string.please_enter_first_name));
+            return false;
+        }
+        if (customerPhoneNumberEditText.getText().toString().isEmpty()) {
+            customerPhoneNumberEditText.setError(getResources().getString(R.string.please_enter_phone_number));
+            return false;
+        }
+        if (customerPhoneNumberEditText.getText().toString().length() != 10) {
+            customerPhoneNumberEditText.setError(getResources().getString(R.string.please_enter_a_valid_phone_number));
+            return false;
+        }
+        return true;
     }
 
     private boolean validateEmail() {
@@ -122,10 +204,8 @@ public class ActivityAddCustomer extends AppCompatActivity {
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches() && !email.isEmpty()) {
             customerEmailEditText.setError(getString(R.string.enter_valid_email));
             requestFocus(customerEmailEditText);
-            Log.d("email", "invalid");
             return false;
         } else {
-            Log.d("email", "valid");
             customerEmailEditText.setError(null);
             requestFocus(customerEmailEditText);
         }
@@ -162,13 +242,13 @@ public class ActivityAddCustomer extends AppCompatActivity {
                                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
                                     ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
                                     null, null);
+                            assert phones != null;
                             phones.moveToFirst();
                             cNumber = phones.getString(phones.getColumnIndex("data1"));
                             cNumber = cNumber.replace(" ", "");
                             if (cNumber.length() > 10) {
                                 cNumber = cNumber.substring(cNumber.length() - 10);
                             }
-                            System.out.println("number is:" + cNumber);
                         }
                         String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 

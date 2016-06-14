@@ -4,7 +4,6 @@
     <string name="drawer_item_home">Home</string>
     <string name="drawer_item_customers">Customers</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_hint">Search</string>
     <string name="action_search">Search</string>
@@ -22,4 +21,16 @@
     <string name="customer_phone_number">Phone Number</string>
     <string name="enter_valid_email">Enter valid email</string>
     <string name="add_new_customer">Add New Customer</string>
+    <string name="action_edit">edit</string>
+    <string name="action_delete">delete</string>
+    <string name="update_customer">Update Customer</string>
+    <string name="update_customer_button_text">Update Customer</string>
+    <string name="customer_deleted_successfully">Customer deleted successfully.</string>
+    <string name="customer_added_successfully">Customer added successfully.</string>
+    <string name="customer_updated_successfully">Customer updated successfully.</string>
+    <string name="there_must_be_some_problem">There must be some problem. Try again later.</string>
+    <string name="please_enter_first_name">Please enter first name.</string>
+    <string name="please_enter_phone_number">Please enter phone number.</string>
+    <string name="please_enter_a_valid_phone_number">Please enter a valid phone number.</string>
+
 </resources>

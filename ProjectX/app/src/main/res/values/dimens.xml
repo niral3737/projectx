@@ -22,4 +22,5 @@
     <dimen name="customer_edit_text_margin_top">10dp</dimen>
     <dimen name="customer_add_customer_button_margin_top">10dp</dimen>
     <dimen name="customer_first_name_edit_text_margin_right">20dp</dimen>
+    <dimen name="display_customer_icon_padding">13dp</dimen>
 </resources>

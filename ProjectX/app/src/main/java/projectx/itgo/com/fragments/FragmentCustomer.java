@@ -22,12 +22,14 @@ import android.widget.Toast;
 
 import com.pnikosis.materialishprogress.ProgressWheel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import projectx.itgo.com.APIServices.CustomerService;
 import projectx.itgo.com.R;
 import projectx.itgo.com.activities.ActivityAddCustomer;
+import projectx.itgo.com.activities.ActivityDisplayCustomer;
 import projectx.itgo.com.adapters.CustomerAdapter;
 import projectx.itgo.com.models.Customer;
 import projectx.itgo.com.utilities.CustomRecyclerClickListener;
@@ -50,8 +52,8 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
     CustomerService customerService;
     ProgressWheel customerFragmentProgressWheel;
     Call<List<Customer>> callCustomers;
-    List<String> customersList = new ArrayList<>();
     List<Customer> customers;
+    List<Customer> filteredCustomerList = new ArrayList<>();
 
     public FragmentCustomer() {
     }
@@ -93,7 +95,9 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
         customersRecyclerView.addOnItemTouchListener(new CustomRecyclerClickListener(getActivity(), new CustomRecyclerClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ActivityDisplayCustomer.class);
+                intent.putExtra("customer",filteredCustomerList.get(position));
+                startActivity(intent);
             }
         }));
 
@@ -117,7 +121,10 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
             public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
                 int statusCode = response.code();
                 if (statusCode == 200) {
+                    customers=null;
                     customers = response.body();
+                    filteredCustomerList.clear();
+                    filteredCustomerList.addAll(customers);
                     if (!(customers.size() > 0)) {
                         customersRecyclerView.setVisibility(View.GONE);
                         customerEmptyRelativeLayout.setVisibility(View.VISIBLE);
@@ -193,7 +200,7 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
     private List<Customer> filter(List<Customer> customers, String query) {
         query = query.toLowerCase();
 
-        final List<Customer> filteredCustomerList = new ArrayList<>();
+        filteredCustomerList.clear();
         for (Customer customer : customers) {
             final String text = customer.getFirstName().toLowerCase();
             if (text.contains(query)) {
@@ -210,6 +217,7 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ActivityAddCustomer.class);
+                intent.putExtra("flag","insert");
                 startActivity(intent);
             }
         });

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="projectx.itgo.com.activities.ActivityDisplayCustomer">
+
+    <include
+        android:id="@+id/display_customer_toolbar"
+        layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/display_customer_main"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/display_customer_toolbar"
+        android:background="@color/colorPrimaryDark">
+
+
+        <TextView
+            android:id="@+id/display_customer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Niral Patel"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/md_white_1000"
+            android:textSize="40sp" />
+
+        <!-- <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_above="@+id/display_customer_name"
+             android:layout_alignLeft="@+id/display_customer_name"
+             android:layout_alignStart="@+id/display_customer_name"
+             android:text="Name"
+             android:textAppearance="?android:attr/textAppearanceSmall" />-->
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/display_customer_main">
+
+    <RelativeLayout
+        android:id="@+id/phone_number_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/phone_number_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/customer_letter_width"
+                android:layout_height="@dimen/customer_letter_height"
+                android:contentDescription="@string/content_description_letter"
+                android:paddingBottom="@dimen/display_customer_icon_padding"
+                android:paddingEnd="@dimen/display_customer_icon_padding"
+                android:paddingLeft="@dimen/display_customer_icon_padding"
+                android:paddingRight="@dimen/display_customer_icon_padding"
+                android:paddingStart="@dimen/display_customer_icon_padding"
+                android:paddingTop="@dimen/display_customer_icon_padding"
+                android:src="@drawable/ic_call_black_18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/customer_name_padding_left"
+                    android:text="Phone Number"
+                    android:textIsSelectable="false"
+                    android:textSize="@dimen/customer_balance_text_size" />
+
+                <TextView
+                    android:id="@+id/display_customer_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="-3dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|top"
+                    android:paddingLeft="@dimen/customer_name_padding_left"
+                    android:textSize="@dimen/customer_title_text_size" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@id/phone_number_layout"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/balance_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/balance_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/customer_letter_width"
+                android:layout_height="@dimen/customer_letter_height"
+                android:contentDescription="@string/content_description_letter"
+                android:paddingBottom="@dimen/display_customer_icon_padding"
+                android:paddingEnd="@dimen/display_customer_icon_padding"
+                android:paddingLeft="@dimen/display_customer_icon_padding"
+                android:paddingRight="@dimen/display_customer_icon_padding"
+                android:paddingStart="@dimen/display_customer_icon_padding"
+                android:paddingTop="@dimen/display_customer_icon_padding"
+                android:src="@drawable/ic_attach_money_black_18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/customer_name_padding_left"
+                    android:text="Balance"
+                    android:textIsSelectable="false"
+                    android:textSize="@dimen/customer_balance_text_size" />
+
+                <TextView
+                    android:id="@+id/display_customer_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="-3dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|top"
+                    android:paddingLeft="@dimen/customer_name_padding_left"
+                    android:textSize="@dimen/customer_title_text_size" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@id/balance_layout"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/company_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/company_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/customer_letter_width"
+                android:layout_height="@dimen/customer_letter_height"
+                android:contentDescription="@string/content_description_letter"
+                android:paddingBottom="@dimen/display_customer_icon_padding"
+                android:paddingEnd="@dimen/display_customer_icon_padding"
+                android:paddingLeft="@dimen/display_customer_icon_padding"
+                android:paddingRight="@dimen/display_customer_icon_padding"
+                android:paddingStart="@dimen/display_customer_icon_padding"
+                android:paddingTop="@dimen/display_customer_icon_padding"
+                android:src="@drawable/ic_business_center_black_18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/customer_name_padding_left"
+                    android:text="Company"
+                    android:textIsSelectable="false"
+                    android:textSize="@dimen/customer_balance_text_size" />
+
+                <TextView
+                    android:id="@+id/display_customer_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="-3dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|top"
+                    android:paddingLeft="@dimen/customer_name_padding_left"
+                    android:textSize="@dimen/customer_title_text_size" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@id/company_layout"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/address_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/address_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/customer_letter_width"
+                android:layout_height="@dimen/customer_letter_height"
+                android:contentDescription="@string/content_description_letter"
+                android:paddingBottom="@dimen/display_customer_icon_padding"
+                android:paddingEnd="@dimen/display_customer_icon_padding"
+                android:paddingLeft="@dimen/display_customer_icon_padding"
+                android:paddingRight="@dimen/display_customer_icon_padding"
+                android:paddingStart="@dimen/display_customer_icon_padding"
+                android:paddingTop="@dimen/display_customer_icon_padding"
+                android:src="@drawable/ic_home_black_18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/customer_name_padding_left"
+                    android:text="Address"
+                    android:textIsSelectable="false"
+                    android:textSize="@dimen/customer_balance_text_size" />
+
+                <TextView
+                    android:id="@+id/display_customer_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="-3dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|top"
+                    android:paddingLeft="@dimen/customer_name_padding_left"
+                    android:textSize="@dimen/customer_title_text_size" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@id/address_layout"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/email_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/email_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/customer_letter_width"
+                android:layout_height="@dimen/customer_letter_height"
+                android:contentDescription="@string/content_description_letter"
+                android:paddingBottom="@dimen/display_customer_icon_padding"
+                android:paddingEnd="@dimen/display_customer_icon_padding"
+                android:paddingLeft="@dimen/display_customer_icon_padding"
+                android:paddingRight="@dimen/display_customer_icon_padding"
+                android:paddingStart="@dimen/display_customer_icon_padding"
+                android:paddingTop="@dimen/display_customer_icon_padding"
+                android:src="@drawable/ic_email_black_18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/customer_name_padding_left"
+                    android:text="Email"
+                    android:textIsSelectable="false"
+                    android:textSize="@dimen/customer_balance_text_size" />
+
+                <TextView
+                    android:id="@+id/display_customer_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="-3dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|top"
+                    android:paddingLeft="@dimen/customer_name_padding_left"
+                    android:textSize="@dimen/customer_title_text_size" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@id/email_layout"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
+    </LinearLayout>
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/display_customer_progress_wheel"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        app:matProg_barColor="#5588FF"
+        app:matProg_progressIndeterminate="true" />
+</RelativeLayout>
+
