@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ActivityMain"
+            android:name=".activities.ActivityLogin"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,17 @@
         <activity
             android:name=".activities.ActivityAddCustomer"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".activities.ActivityDisplayCustomer"></activity>
+        <activity android:name=".activities.ActivityDisplayCustomer" />
+        <activity android:name=".ActivityMain" />
+        <activity android:name=".activities.ActivityFindCustomer" />
+        <activity android:name=".activities.ActivityFindProduct" />
+        <activity android:name=".activities.ActivityNewProduct" />
+        <activity android:name=".activities.ActivityAddProduct" />
+        <activity android:name=".activities.ActivityAddWholesaler" />
+        <activity android:name=".activities.ActivityDisplayWholesaler" />
+        <activity android:name=".activities.ActivityFindWholesaler" />
+        <activity android:name=".activities.ActivityDisplayProduct" />
+        <activity android:name=".activities.ActivityAddTransactionDetails"></activity>
     </application>
 
 </manifest>

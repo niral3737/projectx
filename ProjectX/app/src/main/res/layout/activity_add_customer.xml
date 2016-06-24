@@ -22,6 +22,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/add_customer_toolbar"
             android:scrollbars="vertical">
+
             <FrameLayout
                 android:id="@+id/rootLayout"
                 android:layout_width="match_parent"
@@ -31,87 +32,91 @@
                     android:id="@+id/choose_contact_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginBottom="20dp"
                     android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="40dp"
                     android:src="@drawable/ic_contacts_white_18dp"
                     app:fabSize="normal" />
             </FrameLayout>
+
             <TextView
                 android:id="@+id/choose_from_contacts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rootLayout"
                 android:gravity="center"
-                android:textSize="20sp"
                 android:paddingBottom="20dp"
-                android:text="Choose from Contacts"/>
+                android:text="Choose from Contacts"
+                android:textSize="20sp" />
+
             <View
+                android:id="@+id/divider3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@android:color/holo_blue_dark"
-                android:id="@+id/divider3"
-                android:layout_alignBottom="@id/choose_from_contacts" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/first_linear_layout"
-            android:layout_below="@id/divider3"
-            android:orientation="horizontal">
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/customer_first_name_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/customer_first_name_edit_text_margin_right"
-                android:layout_weight="1"
-                android:layout_marginTop="@dimen/customer_edit_text_margin_top"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:hint="@string/customer_first_name"
-                app:met_floatingLabel="normal" />
+                android:layout_alignBottom="@id/choose_from_contacts"
+                android:background="@android:color/holo_blue_dark" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/customer_last_name_edit_text"
+            <LinearLayout
+                android:id="@+id/first_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_below="@id/customer_first_name_edit_text"
-                android:layout_marginTop="@dimen/customer_edit_text_margin_top"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:hint="@string/customer_last_name"
-                app:met_floatingLabel="normal" />
-        </LinearLayout>
+                android:layout_below="@id/divider3"
+                android:orientation="horizontal">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/customer_first_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/customer_first_name_edit_text_margin_right"
+                    android:layout_marginTop="@dimen/customer_edit_text_margin_top"
+                    android:layout_weight="1"
+                    android:hint="@string/customer_first_name"
+                    app:met_floatingLabel="normal" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/customer_last_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/customer_first_name_edit_text"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/customer_edit_text_margin_top"
+                    android:layout_weight="1"
+                    android:hint="@string/customer_last_name"
+                    app:met_floatingLabel="normal" />
+            </LinearLayout>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/customer_company_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/first_linear_layout"
-                android:paddingBottom="25dp"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/customer_edit_text_margin_top"
                 android:hint="@string/customer_company_name"
+                android:paddingBottom="25dp"
                 app:met_floatingLabel="normal" />
 
             <View
+                android:id="@+id/divider1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
+                android:layout_alignBottom="@id/customer_company_name_edit_text"
                 android:layout_marginLeft="7dp"
                 android:layout_marginRight="7dp"
-                android:id="@+id/divider1"
-                android:layout_alignBottom="@id/customer_company_name_edit_text" />
+                android:background="@android:color/darker_gray" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/customer_phone_number_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/divider1"
-                android:inputType="number"
-                android:layout_marginTop="@dimen/customer_edit_text_margin_top"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/customer_edit_text_margin_top"
                 android:hint="@string/customer_phone_number"
+                android:inputType="number"
                 app:met_floatingLabel="normal"
                 app:met_maxCharacters="10" />
 
@@ -120,11 +125,11 @@
                 android:id="@+id/customer_email_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
                 android:layout_below="@id/customer_phone_number_edit_text"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:hint="@string/customer_email"
+                android:inputType="textEmailAddress"
                 app:met_floatingLabel="normal" />
 
 
@@ -133,47 +138,63 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/customer_email_edit_text"
-                android:layout_marginTop="@dimen/customer_edit_text_margin_top"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:paddingBottom="25dp"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/customer_edit_text_margin_top"
                 android:hint="@string/customer_address"
+                android:paddingBottom="25dp"
                 app:met_floatingLabel="normal" />
 
             <View
+                android:id="@+id/divider2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
+                android:layout_alignBottom="@id/customer_address_edit_text"
                 android:layout_marginLeft="7dp"
                 android:layout_marginRight="7dp"
-                android:id="@+id/divider2"
-                android:layout_alignBottom="@id/customer_address_edit_text" />
+                android:background="@android:color/darker_gray" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/customer_balance_edit_text"
+                android:id="@+id/customer_credit_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/customer_address_edit_text"
-                android:inputType="number"
-                android:layout_marginTop="@dimen/customer_edit_text_margin_top"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:hint="@string/customer_balance"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/customer_edit_text_margin_top"
+                android:hint="@string/customer_credit"
+                android:inputType="number"
+                app:met_floatingLabel="normal" />
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/customer_debit_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/customer_credit_edit_text"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/customer_edit_text_margin_top"
+                android:hint="@string/customer_debit"
+                android:inputType="number"
                 app:met_floatingLabel="normal" />
 
             <Button
                 android:id="@+id/add_new_customer_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/customer_balance_edit_text"
+                android:layout_below="@+id/customer_debit_edit_text"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="@dimen/customer_add_customer_button_margin_top"
-                android:text="@string/add_new_customer" />
+                android:background="@color/colorPrimary"
+                android:text="@string/add_new_customer"
+                android:textColor="@color/md_white_1000" />
 
         </RelativeLayout>
     </ScrollView>
+
     <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/add_customer_activity_progress_wheel"
         android:layout_width="80dp"

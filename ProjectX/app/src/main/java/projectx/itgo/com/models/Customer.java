@@ -8,15 +8,32 @@ import android.os.Parcelable;
  */
 public class Customer implements Parcelable{
     private String address;
-    private Double balance;
-    private String companyName;
+    private Double credit;
+    private Double debit;
+    private String shopName;
     private String email;
     private String firstName;
-    private Integer id;
+    private Long id;
     private String lastName;
     private String phoneNumber;
 
     public Customer() {
+    }
+
+    public Double getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Double credit) {
+        this.credit = credit;
+    }
+
+    public Double getDebit() {
+        return debit;
+    }
+
+    public void setDebit(Double debit) {
+        this.debit = debit;
     }
 
     public String getAddress() {
@@ -27,20 +44,12 @@ public class Customer implements Parcelable{
         this.address = address;
     }
 
-    public Double getBalance() {
-        return balance;
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     public String getEmail() {
@@ -59,11 +68,11 @@ public class Customer implements Parcelable{
         this.firstName = firstName;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -91,11 +100,12 @@ public class Customer implements Parcelable{
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(address);
-        parcel.writeDouble(balance);
-        parcel.writeString(companyName);
+        parcel.writeDouble(credit);
+        parcel.writeDouble(debit);
+        parcel.writeString(shopName);
         parcel.writeString(email);
         parcel.writeString(firstName);
-        parcel.writeInt(id);
+        parcel.writeLong(id);
         parcel.writeString(lastName);
         parcel.writeString(phoneNumber);
     }
@@ -112,11 +122,12 @@ public class Customer implements Parcelable{
 
     private Customer(Parcel in) {
         address = in.readString();
-        balance = in.readDouble();
-        companyName = in.readString();
+        credit = in.readDouble();
+        debit = in.readDouble();
+        shopName = in.readString();
         email = in.readString();
         firstName = in.readString();
-        id = in.readInt();
+        id = in.readLong();
         lastName = in.readString();
         phoneNumber = in.readString();
     }

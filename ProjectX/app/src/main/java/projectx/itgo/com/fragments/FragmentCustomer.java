@@ -18,11 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.pnikosis.materialishprogress.ProgressWheel;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +29,12 @@ import projectx.itgo.com.R;
 import projectx.itgo.com.activities.ActivityAddCustomer;
 import projectx.itgo.com.activities.ActivityDisplayCustomer;
 import projectx.itgo.com.adapters.CustomerAdapter;
+import projectx.itgo.com.database.DBHelper;
+import projectx.itgo.com.models.AppUser;
 import projectx.itgo.com.models.Customer;
 import projectx.itgo.com.utilities.CustomRecyclerClickListener;
 import projectx.itgo.com.utilities.DividerItemDecoration;
-import projectx.itgo.com.utilities.RetrofitUtil;
+import projectx.itgo.com.utilities.ServiceGenerator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,9 +82,10 @@ public class FragmentCustomer extends Fragment implements SearchView.OnQueryText
         customersRecyclerView = (RecyclerView) view.findViewById(R.id.customers_recycler_view);
         customerEmptyRelativeLayout = (RelativeLayout) view.findViewById(R.id.customer_empty_relative_layout);
         customerSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.customer_swipe_refresh_layout);
-        customerService = RetrofitUtil.getCustomerService();
-        callCustomers = customerService.getRegularCustomers();
 
+
+        customerService = ServiceGenerator.createService(CustomerService.class, getActivity());
+        callCustomers = customerService.getRegularCustomers();
 
 //        recycler view actions
 

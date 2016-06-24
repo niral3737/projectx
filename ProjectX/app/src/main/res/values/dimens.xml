@@ -23,4 +23,9 @@
     <dimen name="customer_add_customer_button_margin_top">10dp</dimen>
     <dimen name="customer_first_name_edit_text_margin_right">20dp</dimen>
     <dimen name="display_customer_icon_padding">13dp</dimen>
+    <dimen name="find_product_item_end_column_margin_right">10dp</dimen>
+    <dimen name="add_product_edit_text_margin_top">10dp</dimen>
+    <dimen name="add_product_button_margin_top">10dp</dimen>
+    <dimen name="item_product_first_row_text_size">16sp</dimen>
+    <dimen name="item_product_second_row_text_size">14sp</dimen>
 </resources>

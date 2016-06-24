@@ -1,23 +1,14 @@
 package projectx.itgo.com.activities;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Parcelable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,22 +17,22 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 
 import projectx.itgo.com.APIServices.CustomerService;
 import projectx.itgo.com.R;
+import projectx.itgo.com.database.DBHelper;
+import projectx.itgo.com.models.AppUser;
 import projectx.itgo.com.models.Customer;
-import projectx.itgo.com.utilities.RetrofitUtil;
+import projectx.itgo.com.utilities.ServiceGenerator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ActivityDisplayCustomer extends AppCompatActivity {
 
-    TextView nameTextView, phoneNumberTextView, balanceTextView, comapanyNameTextView, addressTextView, emailTextView;
-    RelativeLayout phoneNumberLinearLayout, balanceLinearLayout, companyNameLinearLayout, addressLinearLayout, emailLinearLayout;
+    TextView nameTextView, phoneNumberTextView, creditTextView, debitTextView, comapanyNameTextView, addressTextView, emailTextView;
+    RelativeLayout phoneNumberLinearLayout, creditLinearLayout, debitLinearLayout, companyNameLinearLayout, addressLinearLayout, emailLinearLayout;
     Toolbar toolbar;
     private Customer customer;
     ProgressWheel displayCustomerProgressWheel;
     CustomerService customerService;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +54,22 @@ public class ActivityDisplayCustomer extends AppCompatActivity {
 
         nameTextView = (TextView) findViewById(R.id.display_customer_name);
         phoneNumberTextView = (TextView) findViewById(R.id.display_customer_phone_number);
-        balanceTextView = (TextView) findViewById(R.id.display_customer_balance);
+        creditTextView = (TextView) findViewById(R.id.display_customer_credit);
+        debitTextView = (TextView) findViewById(R.id.display_customer_debit);
         comapanyNameTextView = (TextView) findViewById(R.id.display_customer_company);
         addressTextView = (TextView) findViewById(R.id.display_customer_address);
         emailTextView = (TextView) findViewById(R.id.display_customer_email);
 
         phoneNumberLinearLayout = (RelativeLayout) findViewById(R.id.phone_number_relative);
-        balanceLinearLayout = (RelativeLayout) findViewById(R.id.balance_relative);
+        creditLinearLayout = (RelativeLayout) findViewById(R.id.credit_relative);
+        debitLinearLayout = (RelativeLayout) findViewById(R.id.debit_relative);
         companyNameLinearLayout = (RelativeLayout) findViewById(R.id.company_relative);
         addressLinearLayout = (RelativeLayout) findViewById(R.id.address_relative);
         emailLinearLayout = (RelativeLayout) findViewById(R.id.email_relative);
 
         displayCustomerProgressWheel = (ProgressWheel) findViewById(R.id.display_customer_progress_wheel);
 
-        customerService = RetrofitUtil.getCustomerService();
+        customerService = ServiceGenerator.createService(CustomerService.class,ActivityDisplayCustomer.this);
 
         nameTextView.setText(String.format("%s %s", customer.getFirstName(), customer.getLastName()));
 
@@ -85,13 +78,18 @@ public class ActivityDisplayCustomer extends AppCompatActivity {
             phoneNumberLinearLayout.setVisibility(View.VISIBLE);
         }
 
-        if (customer.getBalance() != 0) {
-            balanceTextView.setText(customer.getBalance().toString());
-            balanceLinearLayout.setVisibility(View.VISIBLE);
+        if (customer.getCredit() != 0) {
+            creditTextView.setText(customer.getCredit().toString());
+            creditLinearLayout.setVisibility(View.VISIBLE);
         }
 
-        if (!customer.getCompanyName().isEmpty()) {
-            comapanyNameTextView.setText(customer.getCompanyName());
+        if (customer.getDebit() != 0) {
+            debitTextView.setText(customer.getDebit().toString());
+            debitLinearLayout.setVisibility(View.VISIBLE);
+        }
+
+        if (!customer.getShopName().isEmpty()) {
+            comapanyNameTextView.setText(customer.getShopName());
             companyNameLinearLayout.setVisibility(View.VISIBLE);
         }
 

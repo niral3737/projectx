@@ -46,7 +46,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
 //        }else{
 //            holder.balance.setTextColor(context.getResources().getColor(R.color.balance_negative));
 //        }
-        holder.balance.setText(customersList.get(position).getBalance().toString());
+        holder.balance.setText(customersList.get(position).getCredit().toString());
         String firstLetter = String.valueOf(customersList.get(position).getFirstName().charAt(0));
 
         TextDrawable textDrawable = TextDrawable.builder().buildRound(firstLetter, generator.getColor(customersList.get(position).getFirstName()));

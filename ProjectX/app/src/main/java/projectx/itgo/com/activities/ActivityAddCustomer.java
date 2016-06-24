@@ -13,7 +13,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -21,10 +20,12 @@ import android.widget.Toast;
 
 import com.pnikosis.materialishprogress.ProgressWheel;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import projectx.itgo.com.APIServices.CustomerService;
 import projectx.itgo.com.R;
 import projectx.itgo.com.models.Customer;
-import projectx.itgo.com.utilities.RetrofitUtil;
+import projectx.itgo.com.utilities.ServiceGenerator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,7 +33,7 @@ import retrofit2.Response;
 public class ActivityAddCustomer extends AppCompatActivity {
 
     static final int PICK_CONTACT = 1;
-    EditText customerEmailEditText, customerFirstNameEditText, customerPhoneNumberEditText, customerLastNameEditText, customerAddressEditText, customerCompanyNameEditText, customerBalanceEditText;
+    EditText customerDebitEditText, customerEmailEditText, customerFirstNameEditText, customerPhoneNumberEditText, customerLastNameEditText, customerAddressEditText, customerCompanyNameEditText, customerCreditEditText;
     ScrollView customerScrollView;
     ProgressWheel progressWheel;
     FloatingActionButton chooseContactFloatingActionButton;
@@ -46,7 +47,6 @@ public class ActivityAddCustomer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_customer);
-//        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         toolbar = (Toolbar) findViewById(R.id.add_customer_toolbar);
         setSupportActionBar(toolbar);
 
@@ -62,10 +62,11 @@ public class ActivityAddCustomer extends AppCompatActivity {
         customerAddressEditText = (EditText) findViewById(R.id.customer_address_edit_text);
         customerCompanyNameEditText = (EditText) findViewById(R.id.customer_company_name_edit_text);
         customerLastNameEditText = (EditText) findViewById(R.id.customer_last_name_edit_text);
-        customerBalanceEditText = (EditText) findViewById(R.id.customer_balance_edit_text);
+        customerCreditEditText = (EditText) findViewById(R.id.customer_credit_edit_text);
+        customerDebitEditText = (EditText) findViewById(R.id.customer_debit_edit_text);
         addNewCustomerButton = (Button) findViewById(R.id.add_new_customer_button);
         customerEmailEditText.addTextChangedListener(new MyTextWatcher(customerEmailEditText));
-        customerService = RetrofitUtil.getCustomerService();
+        customerService = ServiceGenerator.createService(CustomerService.class, ActivityAddCustomer.this);
 
 
         chooseContactFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -80,13 +81,13 @@ public class ActivityAddCustomer extends AppCompatActivity {
 
         flag = intent.getStringExtra("flag");
 
-        if (flag.equals("insert")) {
+        if (flag.equals("insert") || flag.equals("insertCustomerInProcess")) {
 
             // toolbar.setTitle(R.string.new_customer);
             getSupportActionBar().setTitle(R.string.new_customer);
             customer = new Customer();
 
-        } else {
+        } else if (flag.equals("update")) {
 
             // toolbar.setTitle(R.string.update_customer);
             getSupportActionBar().setTitle(R.string.update_customer);
@@ -97,8 +98,9 @@ public class ActivityAddCustomer extends AppCompatActivity {
             customerEmailEditText.setText(customer.getEmail());
             customerPhoneNumberEditText.setText(customer.getPhoneNumber());
             customerAddressEditText.setText(customer.getAddress());
-            customerCompanyNameEditText.setText(customer.getCompanyName());
-            customerBalanceEditText.setText(customer.getBalance().toString());
+            customerCompanyNameEditText.setText(customer.getShopName());
+            customerCreditEditText.setText(customer.getCredit().toString());
+            customerDebitEditText.setText(customer.getDebit().toString());
 
             addNewCustomerButton.setText(R.string.update_customer_button_text);
 
@@ -115,26 +117,37 @@ public class ActivityAddCustomer extends AppCompatActivity {
                     customer.setAddress(customerAddressEditText.getText().toString());
                     customer.setFirstName(customerFirstNameEditText.getText().toString());
                     customer.setLastName(customerLastNameEditText.getText().toString());
-                    customer.setCompanyName(customerCompanyNameEditText.getText().toString());
+                    customer.setShopName(customerCompanyNameEditText.getText().toString());
                     customer.setEmail(customerEmailEditText.getText().toString());
                     customer.setPhoneNumber(customerPhoneNumberEditText.getText().toString());
-                    if (!customerBalanceEditText.getText().toString().isEmpty()) {
-                        customer.setBalance(Double.parseDouble(customerBalanceEditText.getText().toString()));
+                    if (!customerCreditEditText.getText().toString().isEmpty()) {
+                        customer.setCredit(Double.parseDouble(customerCreditEditText.getText().toString()));
                     } else {
-                        customer.setBalance((double) 0);
+                        customer.setCredit((double) 0);
+                    }
+                    if (!customerDebitEditText.getText().toString().isEmpty()) {
+                        customer.setDebit(Double.parseDouble(customerDebitEditText.getText().toString()));
+                    } else {
+                        customer.setDebit((double) 0);
                     }
 
-                    if (flag.equals("insert")) {
+                    if (flag.equals("insert") || flag.equals("insertCustomerInProcess")) {
 
                         Call<String> addCustomerCall = customerService.addRegularCustomer(customer);
 
                         addCustomerCall.clone().enqueue(new Callback<String>() {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {
-                                if (response.code() == 200) {
+                                if (response.code() == HttpsURLConnection.HTTP_CREATED) {
                                     Toast.makeText(ActivityAddCustomer.this, getResources().getString(R.string.customer_added_successfully), Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(ActivityAddCustomer.this, getResources().getString(R.string.there_must_be_some_problem), Toast.LENGTH_SHORT).show();
+                                }
+                                if (flag.equals("insertCustomerInProcess")) {
+                                    Intent intent1 = new Intent(ActivityAddCustomer.this, ActivityFindProduct.class);
+                                    customer.setId(Long.parseLong(response.body()));
+                                    intent1.putExtra("customer", customer);
+                                    startActivity(intent1);
                                 }
                                 finish();
                             }
@@ -145,12 +158,12 @@ public class ActivityAddCustomer extends AppCompatActivity {
                                 finish();
                             }
                         });
-                    } else {
+                    } else if (flag.equals("update")) {
                         Call<String> updateCustomerCall = customerService.updateCustomer(customer.getId().toString(), customer);
                         updateCustomerCall.clone().enqueue(new Callback<String>() {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {
-                                if (response.code() == 200) {
+                                if (response.code() == HttpsURLConnection.HTTP_OK) {
                                     Toast.makeText(ActivityAddCustomer.this, getResources().getString(R.string.customer_updated_successfully), Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(ActivityAddCustomer.this, getResources().getString(R.string.there_must_be_some_problem), Toast.LENGTH_SHORT).show();
@@ -196,6 +209,15 @@ public class ActivityAddCustomer extends AppCompatActivity {
             customerPhoneNumberEditText.setError(getResources().getString(R.string.please_enter_a_valid_phone_number));
             return false;
         }
+        if (Double.parseDouble(customerDebitEditText.getText().toString()) < 0) {
+            customerDebitEditText.setError(getString(R.string.please_enter_a_valid_debit_value));
+            return false;
+        }
+
+        if (Double.parseDouble(customerCreditEditText.getText().toString()) < 0) {
+            customerCreditEditText.setError(getString(R.string.please_enter_a_valid_credit_value));
+            return false;
+        }
         return true;
     }
 
@@ -204,21 +226,14 @@ public class ActivityAddCustomer extends AppCompatActivity {
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches() && !email.isEmpty()) {
             customerEmailEditText.setError(getString(R.string.enter_valid_email));
-//            requestFocus(customerEmailEditText);
             return false;
         } else {
             customerEmailEditText.setError(null);
-//            requestFocus(customerEmailEditText);
         }
 
         return true;
     }
 
-    private void requestFocus(View view) {
-        if (view.requestFocus()) {
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        }
-    }
 
     //code
     @Override

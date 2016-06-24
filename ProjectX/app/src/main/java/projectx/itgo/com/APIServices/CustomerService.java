@@ -18,17 +18,17 @@ import retrofit2.http.Path;
  */
 public interface CustomerService {
 
-    @GET("regularCustomers")
+    @GET("customers")
     Call<List<Customer>> getRegularCustomers();
 
     @Headers("Content-Type: application/json")
-    @POST("regularCustomers")
+    @POST("customers")
     Call<String> addRegularCustomer(@Body Customer customer);
 
     @Headers("Content-Type: application/json")
-    @PUT("regularCustomers/{id}")
-    Call<String> updateCustomer(@Path("id") String id, @Body Customer customer);
+    @PUT("customers/{customerId}")
+    Call<String> updateCustomer(@Path("customerId") String id, @Body Customer customer);
 
-    @DELETE("regularCustomers/{id}")
-    Call<String> deleteRegularCustomer(@Path("id") String id);
+    @DELETE("customers/{customerId}")
+    Call<String> deleteRegularCustomer(@Path("customerId") String id);
 }
